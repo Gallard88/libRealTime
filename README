@@ -1,0 +1,6 @@
+libRealTime
+
+A Real time scheduling alrogithm.
+This library contains a number of classes to schedule when and how often specific tasks run.
+Requires C++11
+
