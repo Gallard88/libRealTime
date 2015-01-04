@@ -28,11 +28,16 @@ void RT_TaskManager::AddTask(RealTimeTask *task)
 
 unsigned long RT_TaskManager::RunTasks(void)
 {
+  bool missed_deadline = false;
   for ( auto& t: TaskList ) {
 
     bool deadline = t->DeadlineMissed();
     bool overrun  = t->DurationOverrun();
     t->Run();
+
+    if ( deadline == true ) {
+      missed_deadline = true;	// signal that at least 1 task has missed a deadline.
+    }
 
     if ( CallBack != NULL ) {
       // edge detection code.
@@ -48,6 +53,12 @@ unsigned long RT_TaskManager::RunTasks(void)
         CallBack->Duration_Overrun(t->GetName());
       }
     }
+  }
+
+  if ( missed_deadline == true ) {
+    // 1 or more tasks have missed deadlines, therefore we will report 0,
+    // as next time we run there will be a task waiting.
+    return 0;
   }
 
   /*
