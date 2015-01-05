@@ -43,9 +43,9 @@ unsigned long RT_TaskManager::RunTasks(void)
       // edge detection code.
       // Here we look at if the deadline flags have changed. If they have then
       // we inform the world of which type of problem occrred.
-      if (( deadline == false ) && (t->DeadlineMissed() == true )) {
+      if (( deadline == true ) && (t->DeadlineMissed() == false )) {
         CallBack->Deadline_Missed(t->GetName());
-      } else if (( deadline == true ) && (t->DeadlineMissed() == false )) {
+      } else if (( deadline == false ) && (t->DeadlineMissed() == true )) {
         CallBack->Deadline_Recovered(t->GetName());
       }
       // this s true when a process takes longer to run than the allocated time.
