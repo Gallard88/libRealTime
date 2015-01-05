@@ -15,7 +15,8 @@ const unsigned int MILLI_TO_MICRO   = 1000;
 
 // ----------------------------------
 RealTimeTask::RealTimeTask(const string & name, RTT_Interface * task):
-  Name(name), Task(task), Duration(MIN_PERIOD), Period(DEFAULT_PERIOD)
+  Name(name), Task(task), DeadlineMissedFlag(false), DurationOverrunFlag(false),
+  Duration(MIN_PERIOD), Period(DEFAULT_PERIOD)
 {
   SetNextEvent();
 }
