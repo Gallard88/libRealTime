@@ -11,7 +11,8 @@ const unsigned int MAX_HERTZ = 1000;      // largest allowed frequency.
 const unsigned int MIN_PERIOD = 1;        // milliseconds, 1000Hz.
 
 const unsigned int SECONDS_TO_MILLI = 1000;
-const unsigned int MILLI_TO_MICRO   = 1000;
+const unsigned int MICRO_TO_MILLI   = 1000;
+const unsigned int NANO_TO_MILLI    = 1000*1000;
 
 // ----------------------------------
 RealTimeTask::RealTimeTask(const string & name, RTT_Interface * task):
@@ -23,9 +24,9 @@ RealTimeTask::RealTimeTask(const string & name, RTT_Interface * task):
 
 unsigned long RealTimeTask::GetTime(void)
 {
-  struct timeval  tv;
-  gettimeofday(&tv, NULL);
-  return (tv.tv_sec * SECONDS_TO_MILLI) + (tv.tv_usec) / MILLI_TO_MICRO; // convert tv_sec & tv_usec to millisecond
+  struct timespec  tv;
+  clock_gettime(CLOCK_MONOTONIC, &tv );
+  return (tv.tv_sec * SECONDS_TO_MILLI) + (tv.tv_nsec) / NANO_TO_MILLI; // convert tv_sec & tv_usec to millisecond
 }
 
 void RealTimeTask::SetNextEvent(void)
@@ -60,8 +61,6 @@ void RealTimeTask::Run(void)
   // If it is not, then it is a sign that we have missed at least one deadline.
   DeadlineMissedFlag = ( current > NextEvent )? true: false;
 }
-
-
 
 /*
  *  When we update the period, there is a chance it will report a missed

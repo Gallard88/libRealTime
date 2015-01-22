@@ -7,8 +7,7 @@
 #include "RealTimeTask.h"
 
 const unsigned int SECONDS_TO_MILLI = 1000;
-const unsigned int MILLI_TO_MICRO   = 1000;
-
+const unsigned int NANO_TO_MILLI    = 1000*1000;
 
 using namespace std;
 
@@ -67,9 +66,10 @@ unsigned long RT_TaskManager::RunTasks(void)
    */
 
   unsigned long next_event = ULONG_MAX;
-  struct timeval  tv;
-  gettimeofday(&tv, NULL);
-  unsigned long current = (tv.tv_sec * SECONDS_TO_MILLI) + (tv.tv_usec / MILLI_TO_MICRO); // convert tv_sec & tv_usec to millisecond
+
+  struct timespec  tv;
+  clock_gettime(CLOCK_MONOTONIC, &tv );
+  unsigned long current = (tv.tv_sec * SECONDS_TO_MILLI) + (tv.tv_nsec) / NANO_TO_MILLI; // convert tv_sec & tv_usec to milliseco$
 
   for ( auto& t: TaskList ) {
     unsigned long time = t->GetEventTime() - current;
