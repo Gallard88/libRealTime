@@ -15,11 +15,13 @@
 #include "RTT_Interface.h"
 #include <string>
 
+namespace RealTime {
+
 class RealTimeTask {
 
 public:
 
-  RealTimeTask(const std::string & name, RTT_Interface * task);
+  RealTimeTask(const std::string & name, Task_Interface * task);
 
   /*
    * SetFrequency()/SetPeriod()
@@ -70,7 +72,7 @@ public:
 
 private:
   std::string Name;
-  RTT_Interface * Task;
+  Task_Interface * Task;
   bool DeadlineMissedFlag;
   bool DurationOverrunFlag;
 
@@ -84,4 +86,5 @@ private:
   RealTimeTask& operator=(RealTimeTask other);
 };
 
+}  //  namespace RealTime
 #endif

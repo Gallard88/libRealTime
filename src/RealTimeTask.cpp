@@ -5,6 +5,8 @@
 
 using namespace std;
 
+namespace RealTime {
+
 // ----------------------------------
 const unsigned int DEFAULT_PERIOD = 1000; // milliseconds, 1Hz.
 const unsigned int MAX_HERTZ = 1000;      // largest allowed frequency.
@@ -14,7 +16,7 @@ const unsigned int SECONDS_TO_MILLI = 1000;
 const unsigned int MILLI_TO_MICRO   = 1000;
 
 // ----------------------------------
-RealTimeTask::RealTimeTask(const string & name, RTT_Interface * task):
+RealTimeTask::RealTimeTask(const string & name, Task_Interface * task):
   Name(name), Task(task), DeadlineMissedFlag(false), DurationOverrunFlag(false),
   Duration(MIN_PERIOD), Period(DEFAULT_PERIOD)
 {
@@ -92,3 +94,4 @@ void RealTimeTask::SetMaxDuration(unsigned int ms)
   Duration = ms;
 }
 
+}  //  namespace RealTime

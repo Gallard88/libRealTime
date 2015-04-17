@@ -12,6 +12,8 @@ const unsigned int MILLI_TO_MICRO   = 1000;
 
 using namespace std;
 
+namespace RealTime {
+
 RT_TaskManager::RT_TaskManager()
 {
 }
@@ -83,3 +85,5 @@ void RT_TaskManager::AddCallback(RT_TaskMan_Interface *interface)
 {
   CallBack = interface;
 }
+
+}  //  namespace RealTime

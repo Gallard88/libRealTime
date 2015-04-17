@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 
+namespace RealTime {
+
 class RealTimeTask;
 
 class RT_TaskMan_Interface {
@@ -28,5 +30,7 @@ private:
 
   RT_TaskManager& operator=(RT_TaskManager other);
 };
+
+}  //  namespace RealTime
 
 #endif
