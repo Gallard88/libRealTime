@@ -18,6 +18,11 @@ RT_TaskManager::RT_TaskManager()
 
 RT_TaskManager::~RT_TaskManager()
 {
+  for ( auto& t: TaskList ) {
+    if ( CallBack != NULL ) {
+      CallBack->Statistics(t->GetName(),t->GetStats());
+    }
+  }
 }
 
 

@@ -23,6 +23,13 @@ public:
 
   RealTimeTask(const std::string & name, Task_Interface * task);
 
+  typedef struct {
+    unsigned int Min;    // Shortest runtime of this function
+    unsigned int Max;    // Longest runtime of this funtion
+    unsigned int Avg;    // Average runtime of this function
+    unsigned int Called; // How many times this task has been run.
+  } Statistics_t;
+
   /*
    * SetFrequency()/SetPeriod()
    *
@@ -78,6 +85,10 @@ public:
     return Name;
   }
 
+  Statistics_t GetStats(void) {
+    return Stats;
+  }
+
 private:
   std::string Name;
   Task_Interface * Task;
@@ -90,6 +101,9 @@ private:
 
   void SetNextEvent(void);
   unsigned long GetTime(void);
+
+  Statistics_t Stats;
+
 
   RealTimeTask& operator=(RealTimeTask other);
 };

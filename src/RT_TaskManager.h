@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 
+#include "RealTimeTask.h"
+
 namespace RealTime {
 
 class RealTimeTask;
@@ -13,6 +15,7 @@ public:
   virtual void Deadline_Missed(const std::string & name) = 0;
   virtual void Deadline_Recovered(const std::string & name) = 0;
   virtual void Duration_Overrun(const std::string & name) = 0;
+  virtual void Statistics(const std::string & name, RealTimeTask::Statistics_t stats) = 0;
 };
 
 class RT_TaskManager {

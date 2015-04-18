@@ -14,10 +14,14 @@ const unsigned int MIN_PERIOD = 1000;        // micro seconds, 1000Hz.
 
 const unsigned int SECONDS_TO_MICRO = 1000000;
 
+const RealTimeTask::Statistics_t DefaultStat = {
+  0xFFFFFFFF,  0,  0,  0
+};
+
 // ----------------------------------
 RealTimeTask::RealTimeTask(const string & name, Task_Interface * task):
   Name(name), Task(task), DeadlineMissedFlag(false), DurationOverrunFlag(false),
-  Duration(MIN_PERIOD), Period(DEFAULT_PERIOD)
+  Duration(MIN_PERIOD), Period(DEFAULT_PERIOD), Stats(DefaultStat)
 {
   SetNextEvent();
 }
@@ -49,7 +53,19 @@ void RealTimeTask::Run(void)
     Task->Run_Task();
     NextEvent += Period; // update the base time.
 
-    DurationOverrunFlag = ((GetTime() - current ) >= Duration)? true: false;
+    // Update the statistics.
+    Stats.Called++;
+
+    unsigned long d = GetTime() - current;
+    if ( d < Stats.Min )
+      Stats.Min = d;
+    if ( d > Stats.Max )
+      Stats.Max = d;
+    int a;
+    a = (d - Stats.Avg) / Stats.Called;
+    Stats.Avg += a;
+
+    DurationOverrunFlag = (d >= Duration)? true: false;
   }
 
   // Missed period detection.
