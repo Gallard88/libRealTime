@@ -30,10 +30,14 @@ public:
    * SetFrequency()
    * Operates in hertz, useful for tasks that should be run quickly. Min 1Hz, Max 1000Hz.
    *
+   * ms - Set the duration in milli seconds
+   * us - Set the duration in micro seconds
+   *
    * SetPeriod()
    * Sets a period of X ms. Useful for slower tasks. Min 1ms.
    */
-  void SetPeriod(unsigned int ms);
+  void SetPeriod_Ms(unsigned int ms);
+  void SetPeriod_Us(unsigned int us);
   void SetFrequency(unsigned int hz);
 
   /*
@@ -41,8 +45,12 @@ public:
    *
    * Informs the system how  long this task is given to run.
    * If task takes longer than  this time to execute a flag is set.
+   *
+   * ms - Set the duration in milli seconds
+   * us - Set the duration in micro seconds
    */
-  void SetMaxDuration(unsigned int ms);
+  void SetMaxDuration_Ms(unsigned int ms);
+  void SetMaxDuration_Us(unsigned int ms);
 
   /*
    * Run()

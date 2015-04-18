@@ -8,7 +8,7 @@ namespace RealTime {
 
 class RealTimeTask;
 
-class RT_TaskMan_Interface {
+class Reporting_Interface {
 public:
   virtual void Deadline_Missed(const std::string & name) = 0;
   virtual void Deadline_Recovered(const std::string & name) = 0;
@@ -21,12 +21,12 @@ public:
   ~RT_TaskManager();
 
   void AddTask(RealTimeTask *task);
-  void AddCallback(RT_TaskMan_Interface *interface);
+  void AddCallback(Reporting_Interface *interface);
   unsigned long RunTasks(void);
 
 private:
   std::vector<RealTimeTask *> TaskList;
-  RT_TaskMan_Interface *CallBack;
+  Reporting_Interface *CallBack;
 
   RT_TaskManager& operator=(RT_TaskManager other);
 };
